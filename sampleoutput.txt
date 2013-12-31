@@ -1,0 +1,12 @@
+
+Starting Nmap 6.00 ( http://nmap.org ) at 2013-12-31 19:47 CET
+Nmap scan report for labrat.nixnet.jke (192.168.0.27)
+Host is up (0.026s latency).
+Not shown: 996 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+111/tcp open  rpcbind
+514/tcp open  shell
+
+Nmap done: 1 IP address (1 host up) scanned in 1.76 seconds
