@@ -56,9 +56,9 @@ Output=`$Nmap $Host`
 
 IP=`echo "$Output" | $Sed -n '3p' | tr -d '()' | awk '{ print $6 }'`
 Hostname=`echo "$Output" | $Sed -n '3p' | awk '{ print $5 }'`
-Alias=`echo $Hostname | $Awk -F"." '{ printf $1 }'`
+Alias=`echo $Hostname | $Awk -F"." '{ print $1 }'`
 
-Services=`nmap labrat.nixnet.jke | sed -n '7,$p' | head -n -2 \
+Services=`nmap $Host | sed -n '7,$p' | head -n -2 \
 	| awk '{ print $3 }'`
 
 Index=0
