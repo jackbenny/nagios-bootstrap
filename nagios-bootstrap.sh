@@ -24,27 +24,29 @@
 # Version 0.1
 
 # Binaries
-Nmap="/usr/bin/nmap"
-Sed="/bin/sed"
-Awk="/usr/bin/awk"
-Printf="/usr/bin/printf"
-Ls="/bin/ls"
-Grep="/bin/grep"
-Cut="/usr/bin/cut"
-Tr="/usr/bin/tr"
-Head="/usr/bin/head"
+Which="/bin/which"
+Binaries=(nmap sed awk printf ls grep cut tr head)
 
 # Variables
 Version="0.1"
-Plugindir="dummy_checks"
+Plugindir="dummy_checks/"
 
-# Sanity check
-for Bin in $Nmap $Sed $Awk $Printf; do
-	if [ ! -x $Bin ]; then
-		echo "Can't execute $Bin"
+
+# Sanity check binaries and create variables for them
+Count=0
+for i in ${Binaries[@]}; do
+	$Which $i &> /dev/null
+	if [ $? -eq 0 ]; then
+		declare $(echo ${Binaries[$Count]^}=`${Which} $i`)
+		((Count++))
+	else
+		echo "It seems you don't have ${Binaries[$Count]} installed"
+		exit 1
 	fi
 done
 
+
+# Define functions
 print_usage()
 {
 	$Printf "Usage: `basename $0` -H <host> -o <output-file> -h (help)\n"
