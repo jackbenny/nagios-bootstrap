@@ -21,7 +21,6 @@
 ################################################################################
 
 # nagios-bootstrap
-# Version 0.1
 
 # Binaries
 Which="/bin/which"
@@ -29,6 +28,7 @@ Binaries=(nmap sed awk printf ls grep egrep cut tr head)
 
 # Variables
 Version="0.1"
+Author="Jack-Benny Persson <jack-benny@cyberinfo.se>"
 Plugindir="dummy_checks/"
 
 
@@ -49,14 +49,17 @@ done
 # Define functions
 print_usage()
 {
-	$Printf "Usage: `basename $0` -H <host> -o <output-file> -h (help)\n"
+	$Printf "\n`basename $0`\nVersion $Version\n"
+	$Printf "$Author\n\n"
+	$Printf "Usage: `basename $0` -H <host> -o <output-file> -h (help)\n\n"
 }
 
 print_help()
 {
+	print_usage
 	$Printf "-h This help screen\n"
 	$Printf "-H Host to scan and bootstrap for Nagios\n"
-	$Printf "-o Output file to save the configuration file in\n"
+	$Printf "-o Output file to save the configuration file in\n\n"
 }
 
 # Parse options and arguments
