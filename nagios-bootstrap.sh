@@ -25,7 +25,7 @@
 
 # Binaries
 Which="/bin/which"
-Binaries=(nmap sed awk printf ls grep cut tr head)
+Binaries=(nmap sed awk printf ls grep egrep cut tr head)
 
 # Variables
 Version="0.1"
@@ -98,15 +98,15 @@ fi
 IP=`echo "$Output" | $Sed -n '3p' | $Tr -d '()' | $Awk '{ print $6 }'`
 Hostname=`echo "$Output" | $Sed -n '3p' | $Awk '{ print $5 }'`
 Alias=`echo $Hostname | $Awk -F"." '{ print $1 }'`
-Services=`$Nmap $Host | $Sed -n '7,$p' | $Head -n -2 \
-	| $Awk '{ print $3 }'`
+Services=(`$Nmap $Host | $Sed -n '9,$p' | $Head -n -2 \
+	| $Awk '{ print $3 }'`)
 
 
 # Loop through the services that were found open and check if we have
 # a matching Nagios check for it
 Index=0
 for i in ${Services[@]}; do
-	TempServ=`$Ls ${Plugindir}/ | $Grep $i`
+	TempServ=`$Ls ${Plugindir}/ | $Egrep -x check_$i`
 	if [ $? -eq 0 ]; then
 		CheckCommand[$Index]=$TempServ
 		((Index++))
